@@ -1,8 +1,8 @@
 //Data and Variable Declirations
 var timer;
-var minutesLeft =10;
+var minutesLeft =0;
 //starting timer at 25 mins or 10 or whatever i want
-var secondsLeft =10;
+var secondsLeft =5;
 var isOnBreak = false;
 //not currently on break
 var numberOfBreaks =0;
@@ -14,17 +14,32 @@ var startButton = document.querySelector('#start');
 
 //Initialization code
 //Event Listeners
-startButton.addEventListener('click', start); //connects the start function to the start button by addingeventlistener
+startButton.addEventListener('click', start);
+//connects the start function to the start button by addingeventlistener
 render();
 
 //Function definition
  //connected to start button
 function start(){
   if(!timer){
-    timer=setInterval(tick,1000); //create timer if there is not already a timer otherwise skip this
+    timer=setInterval(tick,1000);
+    //create timer if there is not already a timer otherwise skip this
   }
 }
 function tick(){
+  if(secondsLeft === 0 && minutesLeft === 0){
+    clearInterval(timer);
+    timer = !timer; //dereference //set timer to anything that means null so we know to stop the timer
+    if(isOnBreak){
+      numberOfBreaks +=1;
+      resetWorkTime();
+    } else {
+      resetBreakTime();
+    }
+    isOnBreak = !isOnBreak; //! means it flips the variable to opposite
+    render();
+    return;
+  }
   decrementMinutes();
   decrementSeconds();
   render();
@@ -37,7 +52,7 @@ function decrementMinutes(){
 }
 function decrementSeconds(){
   if(secondsLeft === 0){
-    secondsLeft 59;
+    secondsLeft=59;
 } else {
 secondsLeft -=1;
  }
@@ -45,8 +60,8 @@ secondsLeft -=1;
 //decreases mins and second after an interval
 function render(){
 minutes.textContent = pad(minutesLeft);
-console.log(secondsLeft);
-console.log(pad(secondsLeft));
+//console.log(secondsLeft);
+//console.log(pad(secondsLeft));
 seconds.textContent = pad(secondsLeft);
 }
 //deturmines the amount of time that is left
@@ -61,19 +76,19 @@ function pad(num){
 }
 
 
-  //setInterval(tick, 1000); //setting tick cycle every tick creates new frame //1000 milaseconds is equil to 1 second
-//}
-//does something in order over and over again
-function tick(){
- console.log('tick');
- }
- //starting up the server to see if tick works
-
-
-function render(){}
-//takes info and puts it in DOM
-
-
+function resetWorkTime(){  //connects to the if else function and runs it
+  minutesLeft =00;
+  secondsLeft =05;
+}
+function resetBreakTime(){
+  if(numberOfBreaks < 3){
+    minutesLeft =5;
+  } else {
+    minutesLeft =15;
+    numberOfBreaks =0;
+  }
+  secondsLeft =0;
+}
 
 //we want to make a loop that refreshes everysecond //we looked on stackoverflow //the function calls itself once every second
 // googling 'set time out' and 'set interval'
