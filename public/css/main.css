@@ -1,0 +1,33 @@
+h1 {
+  font-family: 'Pacifico',cursive;
+  font-size: 4em;
+  font-weight: 400;
+  text-align: center;
+  color: red;
+}
+
+body {
+  text-align: center;
+  background-color: ;
+}
+
+img {
+  padding-top: 30px;
+ height: 280px;
+ width: 150px;
+}
+
+#display {
+text-align: center;
+margin: auto;
+}
+
+button{
+height:20;
+width:450;
+}
+
+
+span {
+  font-size: 80px;
+}

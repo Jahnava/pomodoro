@@ -5,28 +5,61 @@
     <title>Pomodoro Timer</title>
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="css/main.css">
-
   </head>
-  <body>
-    <div class="container">
-       <div class="row">
-         <div class="col-xs-8 col-xs-offset-2" id='display'> <!--bootstrap settings-->
-             <span id="minutes"></span>
-             <!--25 minutes //don't use too many h1 tags, use span instead. Span wraps content for styling or js content -->
-             <span>:</span>
-             <span id="seconds"></span>
-             <!--0 seconds-->
-         </div>
 
-     </div>
-     <div class="row">
-       <div class="col-xs-8 col-offset-2">
-         <button id='start' class="btn btn-success btn-block">Start</button>
-         <!-- added start as id to the button in order to connect to js start button-->
-       </div>
-     </div>
+  <body>
+    <h1>
+      Pomodoro Timer
+    </h1>
+
+
+    <div>
+    <img src="https://media.giphy.com/media/13DdnDBqrjmuTm/giphy.gif" alt="">
     </div>
 
+    <div class="container">
+       <div class="row">
+         <div class="text-center" id='display'> <!--bootstrap settings-->
+             <b><span id="minutes"></span>
+             <!--set minutes //don't use too many h1 tags, use span instead. Span wraps content for styling or js content -->
+             <span>:</span>
+             <span id="seconds"></span></b>
+             <!--0 seconds-->
+         </div>
+       </div>
+     </div>
+
+    <div class="row">
+      <div class="text-center"> <!--The text center class centers all of the div content-->
+         <button id='start' class="btn btn-success btn-block btn-lg" onclick="start">Start</button>
+         <!-- added start as id to the button in order to connect to js-->
+      </div>
+     </div>
+
+    <br>
+    <div class="row">
+      <div class="text-center">
+         <button id='pause' class="btn btn-warning btn-block btn-lg" onclick="pause">Pause</button>
+        <!--added pause as id to the button in order to connect to js-->
+      </div>
+    </div>
+
+   <br>
+   <div class="row">
+     <div class="text-center">
+       <button id='stop' class="btn btn-danger btn-block btn-lg" onclick="stop">Stop</button>
+     </div>
+   </div>
+
+
+
+   </div>
+
+
     <script src="js/app.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/push.js/0.0.13/push.min.js"></script>
+
+
+
   </body>
 </html>

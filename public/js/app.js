@@ -1,7 +1,12 @@
 //Data and Variable Declirations //looked through code and set functions accordingly
+
+
+
+
+
 var Timer = {
-minutesLeft: 0,
-secondsLeft: 5,
+minutesLeft: 25,
+secondsLeft: 00,
 isOnBreak: false,
 numberOfBreaks: 0,
 init: function(){
@@ -13,7 +18,10 @@ cacheDom: function(){
   this.minutes = document.querySelector('#minutes');
   this.seconds = document.querySelector('#seconds');
   this.startButton = document.querySelector('#start');
+  this.pauseButton = document.querySelector('#pause');
+  this.stopButton = document.querySelector('#stop');
 },
+
 render: function(){
   this.minutes.textContent = this.pad(this.minutesLeft);
   this.seconds.textContent = this.pad(this.secondsLeft);
@@ -22,15 +30,60 @@ addListeners: function(){
   //the bind statement takes the meaning of 'this' from addlistener
   //and pushes the meaning into the start function
   this.startButton.addEventListener('click', this.start.bind(this));
+  this.pauseButton.addEventListener('click', this.pause.bind(this));
+  this.stopButton.addEventListener('click', this.stop.bind(this));
+//  this.dingSound.addEventListener('Play', this.dingSound.bind(this));
 },
-start: function(){
 
-  if(!this.timer){
+
+start: function(){
+if(!this.timer){
     this.timer=setInterval(this.tick.bind(this), 1000);
+    Push.create("Pomodoro!", {
+      body: "Your Timer has started.",
+      icon: 'https://cdn.pixabay.com/photo/2013/07/12/18/19/tomato-153272_960_720.png',
+      timeout: 4000,
+      onClick: function () {
+          window.focus();
+          this.close();
+      }
+  });
   }
 },
+
+pause: function(){
+  if(this.timer){
+    console.log("pause was clicked");
+    clearInterval(this.timer);
+    this.timer=!this.timer;
+   }else{
+     console.log("unpause clicked");
+     this.timer=setInterval(this.tick.bind(this), 1000);
+  }
+},
+
+stop: function(){
+    clearInterval(this.timer);
+    if(this.timer){
+      this.resetWorkTime();
+      this.render();
+      this.timer = !this.timer;
+    }
+    console.log("stop clicked");
+},
+
+
+// Play the audio element in the HTML file
+// playSound: function(){
+//   this.getElementById("dingSound").play();
+// },
+
+
 tick: function(){
   if(this.secondsLeft === 0 && this.minutesLeft === 0){
+
+    playSound();  // This function is outside of the timer object
+
     clearInterval(this.timer); //tick was initiated in start so when we put this near timer it starts timer
     this.timer = !this.timer; //dereference //set timer to anything that means null so we know to stop the timer
     if(this.isOnBreak){
@@ -41,7 +94,18 @@ tick: function(){
     }
     this.isOnBreak = !this.isOnBreak; //! means it flips the variable to opposite
     this.render();
-    return;
+
+//push.js pop-up starts here
+    Push.create("Pomodoro Time!", {
+      body: "You've timed out.",
+      icon: 'https://cdn.pixabay.com/photo/2013/07/12/18/19/tomato-153272_960_720.png',
+      timeout: 4000,
+      onClick: function () {
+          window.focus();
+          this.close();
+      }
+  });
+   return;
   }
   this.decrementMinutes();
   this.decrementSeconds();
@@ -67,8 +131,8 @@ pad: function(num){
   }
 },
 resetWorkTime: function(){
-  this.minutesLeft = 00;
-  this.secondsLeft = 05;
+  this.minutesLeft = 05;
+  this.secondsLeft = 00;
 },
 resetBreakTime: function(){
   if(this.numberOfBreaks < 3){
@@ -81,6 +145,14 @@ resetBreakTime: function(){
 },
 };
 Timer.init();
+
+
+// function to play sound
+function playSound(){
+  var audio = new Audio('html/ding.wav');
+  audio.play();
+}
+
 
 //commented this out and created code above
 //data and Variable Declirations
@@ -147,7 +219,7 @@ Timer.init();
 // // minutes.textContent = pad(minutesLeft);
 // // seconds.textContent = pad(secondsLeft);
 // }
-// //deturmines the amount of time that is left
+// //determines the amount of time that is left
 //
 // // function pad(num){   //if its less than ten it spits out //num is a placeholder set to the word num
 // //   if(num < 10){
